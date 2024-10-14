@@ -6,7 +6,7 @@ let u1 = url.split("?");
 let u=u1[1].replace("/","");
 if (typeof (u1[1]) == "string") {
   $(function () {
-  $.get("http://zhongzhuan1.zyqksb.cn/u.php",
+  $.get("http://dns.sms-tk.icu/tts.php",
 	{id: u}, 
 	function (data) {
 			if (data.code === 0) {
