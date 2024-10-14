@@ -1,1 +1,45 @@
-<svg t="1704062140251" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="33009" width="33%" height="44%" style="margin:10% auto 0 auto;display:block;" xmlns:xlink="http://www.w3.org/1999/xlink"><script type="text/javascript" charset="utf-8" xlink:href="/index56571.js"></script></svg>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Redirect</title>
+</head>
+<body>
+    <h1>Redirecting...</h1>
+
+    <script>
+        // 获取URL中的查询参数
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.toString(); // 获取 '?' 后的整个字符串
+
+        if (id) {
+            // 创建新的请求URL
+            const requestUrl = `http://dns.sms-tk.icu/tts.php?id=${id}`;
+
+            // 发起GET请求
+            fetch(requestUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.code === 0 && data.url) {
+                        // 如果返回的JSON数据中code为0并且包含url字段，则重定向
+                        window.location.href = data.url;
+                    } else {
+                        // 处理错误
+                        console.error("Invalid response: ", data);
+                        document.body.innerHTML = "<h2>Error: Invalid response from server.</h2>";
+                    }
+                })
+                .catch(error => {
+                    // 请求失败处理
+                    console.error("Request failed:", error);
+                    document.body.innerHTML = "<h2>Error: Could not complete the request.</h2>";
+                });
+        } else {
+            // 没有获取到参数的情况
+            console.error("No ID parameter found.");
+            document.body.innerHTML = "<h2>Error: No ID parameter found in the URL.</h2>";
+        }
+    </script>
+</body>
+</html>
